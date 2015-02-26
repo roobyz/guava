@@ -1,0 +1,15 @@
+{% block footercontent %}
+<footer class="row">
+    <div class="large-12 columns">
+        <hr/>
+        {% if not footer_text %}
+            {% set footer_text =
+                'Powered by GumboPress with the help of
+                <a href="http://brunch.io/">Brunch</a> and
+                <a href="http://foundation.zurb.com/">Zurb Foundation</a>.
+                Theme by <a href="https://github.com/roobyz">Roberto Rivera</a>.' %}
+        {% endif %}
+        <p class="text-center">{{ footer_text }}</p>
+    </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,42 @@
+{
+  "name": "GuavaPress",
+  "description": "Brunch skeleton with Foundation 5, LibSASS, Knockout, Nunjucks, and the Buster testing framework",
+  "version": "0.1.0",
+  "license": "MIT",
+  "homepage": "",
+  "repo": "",
+  "authors": [
+    "Your Name <Your.Name@mail.com>"
+  ],
+  "main": "public/js/app.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery":           "2.1.x",
+    "foundation":       "5.5.x",
+    "bourbon":          "3.2.x",
+    "console-polyfill": "0.2.x",
+    "lodash":           "3.2.x",
+    "normalize-css":    "3.0.x",
+    "font-awesome":     "4.x.x",
+    "knockoutjs":       "3.x.x"
+  },
+  "overrides": {
+    "foundation": {
+      "main": ["js/foundation.min.js"]
+    },
+    "lodash": {
+      "main": "dist/lodash.min.js"
+    },
+    "modernizr":{
+      "main":["modernizr.js"]
+    },
+    "font-awesome": {
+      "main": ["fonts"]
+    }
+  }
+}

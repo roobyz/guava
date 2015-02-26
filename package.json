@@ -1,0 +1,50 @@
+{
+  "name": "GuavaPress",
+  "description": "Brunch skeleton with Foundation 5, LibSASS, Knockout, Nunjucks, and the Buster testing framework",
+  "version": "0.1.0",
+  "author": "Your Name <Your.Name@mail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "bin": {
+    "guava": "bin/guava.js"
+  },
+  "scripts": {
+    "start":    "source ./guava-path.sh"
+  },
+  "config": {
+    "blanket": {
+      "pattern": [ "index.js" ],
+      "data-cover-never": "node_modules"
+    }
+  },
+  "dependencies": {
+    "commander":                "2.6.x",
+    "prompt":                   "0.2.x",
+    "colors":                   "1.0.x",
+
+    "auto-reload-brunch":       "1.7.x",
+    "clean-css-brunch":         "1.7.x",
+    "coffee-script-brunch":     "1.8.x",
+    "css-brunch":               "1.7.x",
+    "imageoptmizer-brunch":     "0.x.x",
+    "javascript-brunch":        "1.7.x",
+    "markdown-brunch":          "1.7.x",
+    "node-smushit":             "0.5.x",
+    "nunjucks-brunch":          "0.3.x",
+    "sass-brunch":              "1.8.x",
+    "static-handlebars-brunch": "0.1.x",
+    "uglify-js-brunch":         "1.7.x"
+  },
+  "devDependencies": {
+    "phantomjs":                "1.9.x",
+    "buster":                   "0.7.x",
+    "buster-amd":               "0.3.x",
+    "buster-sinon":             "0.7.x"
+  }
+}
