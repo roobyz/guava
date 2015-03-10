@@ -31,7 +31,6 @@ exports.config =
           'bower_components/jquery/dist/jquery.js'
           'bower_components/lodash/dist/lodash.js'
           'bower_components/knockoutjs/dist/knockout.js'
-          'bower_components/pagerjs/dist/pager.min.js'
         ]
     stylesheets:
       joinTo:
@@ -43,28 +42,24 @@ exports.config =
 
   # Custom plugin settings.
   plugins:
-    autoReload:
-      enabled: true
     sass:
       debug: false,
       mode: 'native',   # set to 'native' to force libsass, otherwise set to 'ruby'
       options:
         includePaths: [
-          'bower_components/bourbon/'
+          'bower_components/bourbon/app/assets/stylesheets/'
           'bower_components/foundation/scss'
         ]
     cleancss:
       keepSpecialComments: 0
       removeEmpty: true
-    imageoptimizer:
-      smushit: true,    # if false it uses jpegtran and optipng, if set to true it will use smushit
-      path: 'images'    # your image path within your public folder
     nunjucks:
       templatePath: /^app(\/|\\)templates(\/|\\)starter-nunjucks-theme/
-      pathReplace: /^app(\/|\\)templates(\/|\\)starter-nunjucks-theme(\/|\\).*.html$/
+      pathReplace:  /^app(\/|\\)templates(\/|\\)starter-nunjucks-theme(\/|\\).*.html$/
       menu_default: 'Canvas'    # options: 'Canvas', 'Bar', 'Default'
       menu_sticky:  'sticky'    # options: 'sticky', ''
-      footer_text:  'This is my footer.'
+      #footer_text:  'This is my footer.'
+      #github_user:  ''
 
     #staticHandlebars:
       # set the context and configure Handlebars

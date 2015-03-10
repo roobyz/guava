@@ -1,0 +1,13 @@
+<div>
+    {% if menu_default == 'Canvas' %}
+        <!-- Off Canvas Menu - defaulted to sticky -->
+        {% set myDefault = "_defaultOffCanvas.html" %}
+    {% else %}
+        {% set myDefault = "_default.html" %}
+    {% endif %}
+
+    {% extends myDefault %}
+    {% block maincontent %}
+        <p>This is what it's about.</p>
+    {% endblock %}
+</div>

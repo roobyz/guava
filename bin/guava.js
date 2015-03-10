@@ -1,15 +1,31 @@
 #!/usr/bin/env node
 
-var program = require('commander');
-var cp = require('child_process');
-var fs = require('fs');
-var pj = require('../package.json');
-var colors = require('colors');
+var program = require('commander'),
+    cp = require('child_process'),
+    fs = require('fs'),
+    pj = require('../package.json'),
+    colors = require('colors');
 
 // set log file names
 var errlog = 'err.log',
     outlog = 'out.log',
     finish = 'don.log';
+
+// ##############################################################
+// Goal: create splash and version heading.
+//
+var content = [
+    '',
+    ' __' + '/######\\'.bold.red + '_____________________________________',
+    ' _' + '|#'.bold.red + '______' + '#|'.bold.red + '____________________________________',
+    ' _' + '|#'.bold.red + '_________' + '|#'.bold.yellow + '____' + '#|'.bold.yellow + '__' + '/###\\#|'.bold.green + '_' + '\\#'.bold.cyan + '____' + '#/'.bold.cyan + '_' + '/###\\#|'.bold.green + '_',
+    ' _' + '|#'.bold.red + '___' + '|###|'.bold.red + '_' + '|#'.bold.yellow + '____' + '#|'.bold.yellow + '_' + '|#'.bold.green + '____' + '#|'.bold.green + '__' + '\\#'.bold.cyan + '__' + '#/'.bold.cyan + '_' + '|#'.bold.green + '____' + '#|'.bold.green + '_',
+    ' _' + '|#'.bold.red + '______' + '#|'.bold.red + '_' + '|#'.bold.yellow + '____' + '#|'.bold.yellow + '_' + '|#'.bold.green + '____' + '#|'.bold.green + '___' + '\\##/'.bold.cyan + '__' + '|#'.bold.green + '____' + '#|'.bold.green + '_',
+    ' __' + '\\######/'.bold.red + '___' + '\\###/#|'.bold.yellow + '__' + '\\###/#|'.bold.green + '____' + '\\/'.bold.cyan + '____' + '\\###/#|'.bold.green + '_',
+    '',
+    ' Version: ' + pj.version,
+    ''
+].join('\n');
 
 // ##############################################################
 // Goal: configure commander options
@@ -18,43 +34,39 @@ program
   .version(content)
   .description(pj.description)
   .option("-b, --build", "build the development static website", build)
-  .option("-d, --deploy", "deploy to Github")
+  .option("-d, --deploy", "deploy to Github", deploy)
   .option("-p, --production", "build the production static website", production)
   .option("-t, --test", "test the development static website", test)
   .option("-w, --watch", "launch the watch server for development", watch)
   .option("-s, --stop-watch", "stop the watch server", stopWatch)
-  .option("-V, --version", "display version number")
   .parse(process.argv);
 
 process.exit(0);
 
 // ##############################################################
-// Goal: create splash and version heading.
+// Goal: generate production static site and deploy to GitHub
+// TODO: develop deployment routine.
 //
-var content = [
-  '',
-  ' __' + '/######\\'.bold.red + '_____________________________________',
-  ' _' + '|#'.bold.red + '______' + '#|'.bold.red + '____________________________________',
-  ' _' + '|#'.bold.red + '_________' + '|#'.bold.yellow + '____' + '#|'.bold.yellow + '__' + '/###\\#|'.bold.green + '_' + '\\#'.bold.cyan + '____' + '#/'.bold.cyan + '_' + '/###\\#|'.bold.green + '_',
-  ' _' + '|#'.bold.red + '___' + '|###|'.bold.red + '_' + '|#'.bold.yellow + '____' + '#|'.bold.yellow + '_' + '|#'.bold.green + '____' + '#|'.bold.green + '__' + '\\#'.bold.cyan + '__' + '#/'.bold.cyan + '_' + '|#'.bold.green + '____' + '#|'.bold.green + '_',
-  ' _' + '|#'.bold.red + '______' + '#|'.bold.red + '_' + '|#'.bold.yellow + '____' + '#|'.bold.yellow + '_' + '|#'.bold.green + '____' + '#|'.bold.green + '___' + '\\##/'.bold.cyan + '__' + '|#'.bold.green + '____' + '#|'.bold.green + '_',
-  ' __' + '\\######/'.bold.red + '___' + '\\###/#|'.bold.yellow + '__' + '\\###/#|'.bold.green + '____' + '\\/'.bold.cyan + '____' + '\\###/#|'.bold.green + '_',
-  '',
-  ' Version: ' + pj.version,
-  ''
-].join('\n');
+function deploy() {
+    console.log('');
+    console.log('Development pending.'.bold.red);
+}
 
 // ##############################################################
 // Goal: call brunch to build the development static site.
 //
 function build() {
-  console.log('');
-  console.log('Building your development static site...'.bold.blue);
+    console.log('');
+    console.log('Building your development static site...'.bold.blue);
 
-  var cmd = 'brunch build';
-  // Execute and log the command synchronously.
-  execSync(cmd);
-  console.log('Development build complete.'.green)
+    var cmd = 'brunch build';
+    // Execute and log the command synchronously.
+    gexecSync(cmd);
+
+    // Kill brunch build in case of hang
+    killProc(cmd);
+
+    console.log('Development build complete.'.green)
 }
 
 // ##############################################################
@@ -66,7 +78,11 @@ function production() {
 
   var cmd = 'brunch build --production';
   // Execute and log the command synchronously.
-  execSync(cmd);
+  gexecSync(cmd);
+
+  // Kill brunch build in case of hang
+  killProc(cmd);
+
   console.log('Production build complete.'.green)
 }
 
@@ -97,7 +113,7 @@ function test() {
   // Launch the buster test cases.
   console.log('Tests case results...'.cyan);
   cmd = './node_modules/.bin/buster-test';
-  execSync(cmd);
+  gexecSync(cmd);
 
   // Clean up the server processes.
   bsvr.kill('SIGTERM');
@@ -108,7 +124,7 @@ function test() {
 }
 
 // ##############################################################
-// Goal: call brunch server for watching the site for changes..
+// Goal: call brunch server for watching the site for changes.
 //
 function watch() {
   console.log('');
@@ -116,96 +132,19 @@ function watch() {
 
   var cmd = 'brunch watch --server';
   // Execute and log the command synchronously.
-  wsvr = execSync(cmd);
+  gexecSync(cmd);
 
   console.log('Watch process is running in the background.'.green);
   console.log('To stop the process, run: '.cyan + '"guava.js -s"'.bold.cyan);
 }
 
 // ##############################################################
-// Goal: Create Pseudo Synchronous execution (until node v.0.12)
+// Goal: stop the brunch watch server background process.
 //
-function execSync(command) {
-  cleanLogs();
-  var result = "";
-  var out = fs.openSync(finish, 'a'),
-      outstats = fs.statSync(finish);
-
-  // Run the command in a subshell
-  var cproc = cp.exec(command + ' 2>err.log 1>out.log && echo done! > don.log');
-
-  // Block the event loop until the command has executed.
-  while ( outstats["size"] == 0 ) {
-    outstats = fs.statSync(finish);
-    if ( pauseOne() ) {
-      fs.writeFileSync(finish, fs.appendFile(errlog, outlog));
-    }
-  }
-
-  // If output log is empty, return the error log.
-  errstats = fs.statSync(outlog);
-  if (errstats["size"] == 0) {
-    result = fs.readFileSync(errlog);
-  } else {
-    result = fs.readFileSync(outlog);
-  }
-
-  // Delete temporary files.
-  cleanLogs();
-
-  process.stdout.write(result);
-  return cproc;
-}
-
-// ##############################################################
-// Goal: Create Pseudo Synchronous background child launcher.
-//
-function execSpawn(command, params) {
-  cleanLogs();
-  var out = fs.openSync(outlog, 'a'),
-      err = fs.openSync(errlog, 'a'),
-      outstats = fs.statSync(outlog),
-      errstats = fs.statSync(errlog),
-      result = "";
-
-  if ( params.length == 0 ) {
-    params.push(command);
-    command = 'node';
-  }
-
-  // Run the command as a background process
-  var cproc = cp.spawn(command, params, {
-    stdio: [ 'ignore', out, err ], // piping stdout and stderr to files.
-    detached: true
-  });
-
-
-  // Block the event loop until the command has executed.
-  while ( outstats["size"] == 0 && errstats["size"] == 0 ) {
-    // update the file stats.
-    outstats = fs.statSync(outlog);
-    errstats = fs.statSync(errlog);
-    if ( command !== 'node' ) {
-      fs.writeSync(out, 'phantom-server running\n');
-    }
-  }
-
-  // Read the result
-  if (errstats["size"] == 0) {
-    result = "(" + cproc.pid + ") -> " + fs.readFileSync(outlog);
-  } else {
-    result = fs.readFileSync(errlog);
-  }
-  process.stdout.write(result);
-
-  // Delete temporary files.
-  cleanLogs();
-
-  return cproc;
-}
-
 function stopWatch() {
   var spid = findPID("brunch watch --server 2");
+
+  console.log('');
 
   if ( spid ) {
     killProc('brunch watch --server');
@@ -215,6 +154,9 @@ function stopWatch() {
   }
 }
 
+// ##############################################################
+// Goal: housecleaning for GuavaPress functions
+//
 function cleanLogs() {
   if ( fs.existsSync(outlog) ) {
     fs.unlinkSync(outlog);
@@ -227,7 +169,10 @@ function cleanLogs() {
   }
 }
 
-function pauseOne(OptArg) {
+// ##############################################################
+// Goal: pause Node for specified number of seconds.
+//
+function pauseSec(OptArg) {
   if (typeof OptArg === 'undefined') {
     OptArg = 1;
   }
@@ -242,6 +187,9 @@ function pauseOne(OptArg) {
   return true;
 }
 
+// ##############################################################
+// Goal: kill background process group.
+//
 function killProc(searchStr) {
   var exec = cp.execFile;
 
@@ -252,15 +200,19 @@ function killProc(searchStr) {
   });
 }
 
+// ##############################################################
+// Goal: find background process ID
+// TODO: see if we can make it multi-platform usable.
+//
 function findPID(searchStr) {
   var exec = cp.exec;
   var cmd = 'pgrep -f "' + searchStr + '" > ' + outlog;
 
-  // Launch the process ID search.
+  // Create process ID log file.
   exec(cmd);
 
   // Pause to ensure log file is ready.
-  pauseOne();
+  pauseSec();
 
   // Capture the process ID from the log by line.
   var myArray = fs.readFileSync(outlog).toString().split("\n");
@@ -274,4 +226,90 @@ function findPID(searchStr) {
   } else {
     return null;
   }
+}
+
+// ##############################################################
+// Goal: Create Pseudo Synchronous execution
+//
+function gexecSync(command) {
+    cleanLogs();
+    var out = fs.openSync(finish, 'a'),
+        outstats = fs.statSync(finish);
+
+    // Run the command in a subshell
+    var cproc = cp.exec(command + ' 2>err.log 1>out.log && echo done! > don.log');
+
+    // Block the event loop until the command has executed.
+    while ( outstats["size"] == 0 ) {
+        outstats = fs.statSync(finish);
+
+        // wait two seconds to see if the process completes.
+        if ( pauseSec(2) ) {
+            // append the error or output log to the finish log.
+            fs.writeFileSync(finish, fs.appendFile(errlog, fs.readFileSync(outlog)));
+        }
+    }
+
+    // Print the error log, if exists.
+    if (fs.statSync(errlog)["size"] > 0) {
+        process.stdout.write(fs.readFileSync(errlog));
+        console.log('');
+    }
+
+    // Print the output log, if exists.
+    if (fs.statSync(outlog)["size"] > 0) {
+        process.stdout.write(fs.readFileSync(outlog));
+    }
+
+    // Delete temporary files.
+    cleanLogs();
+
+    return cproc;
+}
+
+// ##############################################################
+// Goal: Create Pseudo Synchronous background child launcher.
+//
+function execSpawn(command, params) {
+    cleanLogs();
+    var out = fs.openSync(outlog, 'a'),
+        err = fs.openSync(errlog, 'a'),
+        outstats = fs.statSync(outlog),
+        errstats = fs.statSync(errlog),
+        result = "";
+
+    if ( params.length == 0 ) {
+        params.push(command);
+        command = 'node';
+    }
+
+    // Run the command as a background process
+    var cproc = cp.spawn(command, params, {
+        stdio: [ 'ignore', out, err ], // piping stdout and stderr to files.
+        detached: true
+    });
+
+
+    // Block the event loop until the command has executed.
+    while ( outstats["size"] == 0 && errstats["size"] == 0 ) {
+        // update the file stats.
+        outstats = fs.statSync(outlog);
+        errstats = fs.statSync(errlog);
+        if ( command !== 'node' ) {
+            fs.writeSync(out, 'phantom-server running\n');
+        }
+    }
+
+    // Read the result
+    if (errstats["size"] == 0) {
+        result = "(" + cproc.pid + ") -> " + fs.readFileSync(outlog);
+    } else {
+        result = fs.readFileSync(errlog);
+    }
+    process.stdout.write(result);
+
+    // Delete temporary files.
+    cleanLogs();
+
+    return cproc;
 }

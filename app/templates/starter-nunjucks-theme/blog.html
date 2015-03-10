@@ -1,0 +1,110 @@
+<div>
+    {% if menu_default == 'Canvas' %}
+    <!-- Off Canvas Menu -- defaulted to sticky -->
+    {% set myDefault = "_defaultOffCanvas.html" %}
+    {% else %}
+    {% set myDefault = "_default.html" %}
+    {% endif %}
+
+    {% extends myDefault %}
+    {% block maincontent %}
+    <div id="index">
+        {% include '_header.html' %}
+        <div class="row">
+            <div class="medium-8 large-8 columns">
+                <div class="row">
+                    <div class="small-4 medium-4 large-4 columns"><span><img class="bg-divider" src="img/page_shadow_background.png"
+                                                                             alt=""/></span>
+                        <p><img src="http://lorempixel.com/400/400/technics/1" alt=""/></p>
+                    </div>
+                    <div class="small-8 medium-8 large-8 columns">
+                        <h5><strong>Lorem ipsum dolor sit amet.</strong></h5>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea incidunt minus nesciunt omnis sint,
+                            voluptates!</p>
+
+                        <p><a class="button radius" href="">Read Me &raquo;</a></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-4 medium-4 large-4 columns"><span><img class="bg-divider" src="img/page_shadow_background.png"
+                                                                             alt=""/></span>
+
+                        <p><img src="http://lorempixel.com/400/400/technics/2" alt=""/></p>
+                    </div>
+                    <div class="small-8 medium-8 large-8 columns">
+                        <h5><strong>Architecto autem ex quod repellendus.</strong></h5>
+
+                        <p>Aliquam aperiam aut consectetur debitis harum nisi nulla odio? A doloremque error quas veritatis
+                            voluptate.</p>
+
+                        <p><a class="button radius" href="">Read Me &raquo;</a></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-4 medium-4 large-4 columns"><span><img class="bg-divider" src="img/page_shadow_background.png"
+                                                                             alt=""/></span>
+
+                        <p><img src="http://lorempixel.com/400/400/technics/3" alt=""/></p>
+                    </div>
+                    <div class="small-8 medium-8 large-8 columns">
+                        <h5><strong>Cumque distinctio laudantium necessitatibus obcaecati.</strong></h5>
+
+                        <p>Dolores in magnam nihil nisi optio provident qui sequi ut vel voluptas. Iste, placeat, sunt!</p>
+
+                        <p><a class="button radius" href="">Read Me &raquo;</a></p>
+                    </div>
+                </div>
+            </div>
+            <aside class="medium-4 large-4 columns">
+                <div class="panel">
+                    <ul id="sidebar-box">
+                        <h5><strong>Recent Posts</strong></h5>
+                        <hr/>
+                        <li><a href="">Lorem ipsum dolor.</a></li>
+                        <li><a href="">A, eaque, quae.</a></li>
+                        <li><a href="">Ab, ex id.</a></li>
+                        <li><a href="">Corporis, dicta, enim.</a></li>
+                        <li><a href="">Aliquam ducimus, odit.</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+    {% endblock %}
+</div>
+<!--
+-- emmet generatea blog entries with pictures with a shadow background image.
+div.row*3>div.small-4.medium-4.large-4.columns>span>img.bg-divider[src=img/page_shadow_background.png]^p>img[src=http://lorempixel.com/400/400/technics/$]^^div.small-8.medium-8.large-8.columns>h5>strong>lorem5^^p>lorem15^p>a.button.radius{Read Me &raquo;}
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

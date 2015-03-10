@@ -1,0 +1,42 @@
+// Class for having an image with rounded frame.
+.rounded-image {
+  border-radius: 180px;
+  max-height: 150px;
+}
+
+// ID for the sidebar
+#sidebar-box {
+  //display: table-cell;
+  font-size: $paragraph-aside-font-size;
+}
+
+// Class for divider shadow
+.bg-divider {
+  border-top-style: solid;
+  border-top-color: black;
+  position: absolute;
+  left: -14px;
+  top: -10px;
+  z-index: -1;
+}
+
+// Classes for proper functioning of fixed off-canvas menu.
+.off-canvas-fixed {
+  -webkit-transition: -webkit-transform 500ms ease;
+  transition: transform 500ms ease;
+}
+.move-right > .off-canvas-fixed {
+  height: 100%;
+  -webkit-transform: translate3d(15.625rem, 0, 0);
+  transform: translate3d(15.625rem, 0, 0);
+}
+.left-off-canvas-menu {
+  -webkit-transform: none;
+  transform: none;
+  margin-left: -15.625rem;
+  /* vh UNITS are less supported by older browsers */
+  //height: 100vh;
+  top: 0;     // set top margin to zero
+  bottom: 0;  // set bottom margin to zero
+}
+

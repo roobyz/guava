@@ -1,7 +1,7 @@
 {
-  "name": "GuavaPress",
+  "name": "Guava",
   "description": "Brunch skeleton with Foundation 5, LibSASS, Knockout, Nunjucks, and the Buster testing framework",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "homepage": "",
   "repo": "",
@@ -18,7 +18,7 @@
   "dependencies": {
     "jquery":           "2.1.x",
     "foundation":       "5.5.x",
-    "bourbon":          "3.2.x",
+    "bourbon":          "4.2.x",
     "console-polyfill": "0.2.x",
     "lodash":           "3.2.x",
     "normalize-css":    "3.0.x",

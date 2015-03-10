@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% include "_head.html" %}
+    </head>
+    <body>
+        <div class="off-canvas-wrap" data-offcanvas>
+            <div class="fixed off-canvas-fixed">
+
+                <nav class="tab-bar" data-topbar>
+                    <section class="left-small">
+                        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                    </section>
+                    <section class="middle tab-bar-section">
+                        <h1 class="title">Welcome to Guava</h1>
+                    </section>
+                </nav>
+
+                <aside class="left-off-canvas-menu">
+                    <p></p>
+                    <p class="text-center"><a href="index.html">
+                        <img class="rounded-image" src="img/user_pic.jpg"/></a>
+                    </p>
+                    <ul class="off-canvas-list">
+                        <li><a href="index.html"><i class="fa fa-home fa-lg"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fa fa-male fa-lg"></i> About</a></li>
+                        <li><a href="blog.html"><i class="fa fa-rss-square fa-lg"></i> Blog</a></li>
+                        <li><label>FOLLOW</label></li>
+                    </ul>
+                    <ul class="small-block-grid-4 text-center">
+                        <li><a href="#"><i class="fa fa-github-alt fa-lg"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin fa-lg"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter fa-lg"></i></a></li>
+                        <li><a href="#"><i class="fa fa-facebook-official fa-lg"></i></a></li>
+                    </ul>
+                </aside>
+
+            </div>
+
+            <div class="inner-wrap">
+                <a class="exit-off-canvas"></a>
+
+                <section id="main-section">
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <!-- Main Body -->
+                            {% block maincontent %}
+                            {% endblock %}
+                            <!-- End Main Body -->
+
+                            <!-- Footer -->
+                            {% include "_footer.html" %}
+                            <!-- End Footer -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>
