@@ -33,7 +33,7 @@ Guava is an open source Static Website Engine developed with JavaScript and Node
 - Install Bower: `npm install -g bower`.
 - Install Guava skeleton: `brunch new https://github.com/roobyz/guava <app_name>`.
 - cd into your new app folder.
-- verify can run the watch server: `./bin/guava.js w -s` and `open http://localhost:3333/`
+- verify can run the watch server: `./bin/guava.js -w` and `open http://localhost:3333/`
 
 ### Running
 
